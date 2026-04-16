@@ -1,23 +1,19 @@
 <template>
-  <div class="fullscreen bg-blue text-white text-center q-pa-md flex flex-center">
-    <div>
-      <div style="font-size: 30vh">404</div>
+  <q-page class="flex flex-center column text-center">
+    <h1 class="text-h1 text-primary">404</h1>
+    <p class="text-grey-7">Página no encontrada</p>
 
-      <div class="text-h2" style="opacity: 0.4">Oops. Nothing here...</div>
-
-      <q-btn
-        class="q-mt-xl"
-        color="white"
-        text-color="blue"
-        unelevated
-        to="/"
-        label="Go Home"
-        no-caps
-      />
-    </div>
-  </div>
+    <q-btn
+      color="primary"
+      label="Volver al inicio"
+      to="/"
+      class="q-mt-md"
+    />
+  </q-page>
 </template>
 
-<script setup>
-//
+<script>
+export default {
+  name: 'ErrorNotFound'
+}
 </script>
