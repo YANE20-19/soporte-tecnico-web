@@ -5,22 +5,22 @@
         <div class="hero-card hero-card--dark">
           <span class="eyebrow">
             <q-icon name="verified" size="18px" />
-            Soporte tecnico para computadoras y laptops
+            Soporte técnico para computadoras y laptops
           </span>
 
           <h1 class="display-title">
-            Soluciones rapidas y confiables para tu computadora o laptop.
+            Soluciones rápidas y confiables para tu computadora o laptop.
           </h1>
 
           <p class="lead-copy">
-            Mantenimiento, formateo, eliminacion de virus, optimizacion y soporte remoto con
-            atencion clara en Sullana.
+            Mantenimiento, formateo, eliminación de virus, optimización y soporte remoto con
+            atención clara en Sullana.
           </p>
 
           <div class="chip-row q-mt-xl">
             <span class="info-pill">WhatsApp o llamadas</span>
-            <span class="info-pill">Atencion remota</span>
-            <span class="info-pill">Diagnostico claro</span>
+            <span class="info-pill">Atención remota</span>
+            <span class="info-pill">Diagnóstico claro</span>
           </div>
 
           <div class="action-row q-mt-xl">
@@ -34,7 +34,7 @@
             <q-btn
               outline
               no-caps
-              label="Solicitar diagnostico"
+              label="Solicitar diagnóstico"
               to="/contacto"
               class="ts-btn ts-btn--ghost hero-btn-outline"
             />
@@ -48,7 +48,7 @@
               class="hero-visual-image"
             />
             <div class="hero-visual-copy">
-              <div class="hero-visual-kicker">Atencion tecnica confiable</div>
+              <div class="hero-visual-kicker">Atención técnica confiable</div>
               <div class="hero-visual-title">
                 Recibe ayuda para lentitud, virus, errores y mantenimiento sin complicaciones.
               </div>
@@ -78,11 +78,11 @@
         </span>
         <div class="page-header-copy">
           <h2 class="section-title">
-            Servicios pensados para resolver lo que mas afecta tu equipo.
+            Servicios pensados para resolver lo que más afecta tu equipo.
           </h2>
           <p class="muted-copy">
-            Desde mantenimiento preventivo hasta soporte remoto y recuperacion de datos, encuentra
-            una atencion practica para computadoras y laptops.
+            Desde mantenimiento preventivo hasta soporte remoto y recuperación de datos, encuentra
+            una atención práctica para computadoras y laptops.
           </p>
         </div>
 
@@ -142,9 +142,9 @@
         <div class="surface-panel">
           <span class="eyebrow eyebrow--light">
             <q-icon name="verified" size="18px" />
-            Por que elegirnos
+            Por qué elegirnos
           </span>
-          <h2 class="section-title">Atencion moderna, clara y enfocada en resolver.</h2>
+          <h2 class="section-title">Atención moderna, clara y enfocada en resolver.</h2>
           <div class="card-grid section-spacing">
             <article v-for="item in trustHighlights" :key="item.title" class="content-card">
               <div class="mini-title">{{ item.title }}</div>
@@ -173,7 +173,7 @@
         <div>
           <div class="eyebrow">Contacto directo</div>
           <h2 class="section-title cta-title">
-            Escribenos y coordinamos la mejor solucion para tu equipo.
+            Escríbenos y coordinamos la mejor solución para tu equipo.
           </h2>
           <p class="lead-copy cta-copy">
             WhatsApp o llamadas: {{ companyProfile.phoneLabel }}. Correo:
@@ -185,7 +185,7 @@
           <q-btn
             unelevated
             no-caps
-            label="Ver catalogo completo"
+            label="Ver catálogo completo"
             to="/servicios"
             class="ts-btn ts-btn--warm"
           />
@@ -203,7 +203,9 @@
     <ServiceDialog
       v-model="dialog"
       :service="servicioActivo"
+      @close="cerrarDetalle"
       @contact="consultarWhatsApp"
+      @hide="limpiarDetalle"
       @pay="irPagos"
     />
   </q-page>
@@ -230,7 +232,9 @@ export default {
   data() {
     return {
       companyProfile,
+      detalleScrollTop: 0,
       dialog: false,
+      restaurarScrollAlCerrar: false,
       servicioActivo: null,
       processSteps,
       testimonials,
@@ -239,17 +243,17 @@ export default {
       heroHighlights: [
         {
           title: 'PC y Laptop',
-          body: 'Soporte tecnico integral',
+          body: 'Soporte técnico integral',
           icon: 'computer',
         },
         {
           title: 'Remoto',
-          body: 'Atencion rapida donde estes',
+          body: 'Atención rápida donde estés',
           icon: 'headset_mic',
         },
         {
-          title: 'Agil',
-          body: 'Diagnostico inicial claro',
+          title: 'Ágil',
+          body: 'Diagnóstico inicial claro',
           icon: 'bolt',
         },
         {
@@ -263,14 +267,37 @@ export default {
 
   methods: {
     verDetalle(service) {
+      this.detalleScrollTop = window.scrollY || window.pageYOffset || 0
+      this.restaurarScrollAlCerrar = false
       this.servicioActivo = service
       this.dialog = true
+    },
+
+    cerrarDetalle() {
+      this.restaurarScrollAlCerrar = true
+      this.dialog = false
+    },
+
+    limpiarDetalle() {
+      const detalleScrollTop = this.detalleScrollTop
+      const restaurarScrollAlCerrar = this.restaurarScrollAlCerrar
+
+      this.restaurarScrollAlCerrar = false
+      this.servicioActivo = null
+
+      if (restaurarScrollAlCerrar) {
+        this.$nextTick(() => {
+          requestAnimationFrame(() => {
+            window.scrollTo(0, detalleScrollTop)
+          })
+        })
+      }
     },
 
     consultarWhatsApp(service = this.servicioActivo) {
       const message = service
         ? buildServiceMessage(service.t)
-        : 'Hola, quiero informacion sobre sus servicios.'
+        : 'Hola, quiero información sobre sus servicios.'
 
       window.open(buildWhatsAppUrl(message), '_blank')
     },

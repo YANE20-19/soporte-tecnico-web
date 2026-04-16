@@ -42,7 +42,7 @@
           <q-form class="form-grid q-mt-lg" @submit.prevent="pagar">
             <q-input
               v-model="numeroTarjeta"
-              label="Numero de tarjeta"
+              label="Número de tarjeta"
               outlined
               rounded
               color="primary"

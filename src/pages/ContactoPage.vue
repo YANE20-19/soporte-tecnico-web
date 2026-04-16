@@ -5,13 +5,13 @@
         <div class="hero-card hero-card--light">
           <span class="eyebrow eyebrow--light">
             <q-icon name="mail" size="18px" />
-            Contacto y coordinacion
+            Contacto y coordinación
           </span>
           <h1 class="section-title section-title--large">
-            Contactanos y cuentanos que problema tiene tu computadora o laptop.
+            Contáctanos y cuéntanos qué problema tiene tu computadora o laptop.
           </h1>
           <p class="muted-copy lead-copy">
-            Atendemos soporte tecnico en Sullana y de manera remota. Puedes escribir por WhatsApp,
+            Atendemos soporte técnico en Sullana y de manera remota. Puedes escribir por WhatsApp,
             llamar al 915 174 884 o enviar un correo a {{ companyProfile.email }}.
           </p>
         </div>
@@ -34,7 +34,7 @@
         <div class="surface-panel form-panel">
           <span class="eyebrow eyebrow--light">
             <q-icon name="description" size="18px" />
-            Cuentanos tu caso
+            Cuéntanos tu caso
           </span>
 
           <q-form class="form-grid q-mt-lg" @submit.prevent="enviarWhatsApp">
@@ -98,19 +98,20 @@
 
         <div class="stack-column">
           <div class="floating-card">
-            <div class="mini-title">Por que escribirnos</div>
+            <div class="mini-title">Por qué escribirnos</div>
             <ul class="service-list muted-copy">
               <li>Respuesta directa por WhatsApp o llamada.</li>
-              <li>Orientacion clara segun la falla del equipo.</li>
-              <li>Atencion remota o coordinada en Sullana.</li>
+              <li>Orientación clara según la falla del equipo.</li>
+              <li>Coordinación directa de horario y modalidad.</li>
+              <li>Atención remota o coordinada en Sullana.</li>
             </ul>
           </div>
 
           <div class="floating-card">
-            <div class="mini-title">Datos de atencion</div>
+            <div class="mini-title">Datos de atención</div>
             <p class="muted-copy q-mb-none">
               WhatsApp o llamadas: {{ companyProfile.phoneLabel }}. Correo:
-              {{ companyProfile.email }}. Ubicacion: {{ companyProfile.location }}.
+              {{ companyProfile.email }}. Ubicación: {{ companyProfile.location }}.
             </p>
           </div>
         </div>
@@ -149,7 +150,7 @@ export default {
       }
 
       const texto =
-        'Nuevo soporte tecnico\n' +
+        'Nuevo soporte técnico\n' +
         `Nombre: ${this.nombre}\n` +
         `Celular: ${this.telefono}\n` +
         `Equipo: ${this.equipo || 'No especificado'}\n` +

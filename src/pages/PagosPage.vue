@@ -5,13 +5,13 @@
         <div class="hero-card hero-card--light">
           <span class="eyebrow eyebrow--light">
             <q-icon name="payments" size="18px" />
-            Metodo de pago
+            Método de pago
           </span>
           <h1 class="section-title section-title--large">
-            Elige la forma de pago que te resulte mas comoda.
+            Elige la forma de pago que te resulte más cómoda.
           </h1>
           <p class="muted-copy lead-copy">
-            Selecciona tarjeta, Yape o efectivo para continuar con la reserva o coordinacion de tu
+            Selecciona tarjeta, Yape o efectivo para continuar con la reserva o coordinación de tu
             servicio.
           </p>
 
@@ -24,12 +24,12 @@
           </div>
 
           <div v-else class="note-box q-mt-xl">
-            Aun no has elegido un servicio. Vuelve al catalogo y selecciona la opcion que necesitas.
+            Aún no has elegido un servicio. Vuelve al catálogo y selecciona la opción que necesitas.
           </div>
         </div>
 
         <div class="floating-card">
-          <div class="mini-title">Metodos disponibles</div>
+          <div class="mini-title">Métodos disponibles</div>
           <div class="method-stack">
             <button
               v-for="method in paymentMethods"

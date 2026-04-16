@@ -8,7 +8,7 @@
             Sobre el servicio
           </span>
           <h1 class="section-title section-title--large">
-            Soporte tecnico con atencion clara, cercana y confiable.
+            Soporte técnico con atención clara, cercana y confiable.
           </h1>
           <p class="muted-copy lead-copy">
             Trabajamos para que tu computadora o laptop vuelva a funcionar bien sin explicaciones
@@ -35,9 +35,9 @@
           />
           <div class="story-overlay">
             <div class="story-copy">
-              <div class="story-tag">Atencion con enfoque humano</div>
+              <div class="story-tag">Atención con enfoque humano</div>
               <div class="story-title">
-                Priorizamos tu tiempo, tu informacion y el buen estado de tu equipo.
+                Priorizamos tu tiempo, tu información y el buen estado de tu equipo.
               </div>
             </div>
           </div>
@@ -54,13 +54,49 @@
         </article>
       </section>
 
+      <section class="surface-panel">
+        <span class="eyebrow eyebrow--light">
+          <q-icon name="track_changes" size="18px" />
+          Misión y visión
+        </span>
+        <div class="page-header-copy">
+          <h2 class="section-title">La base que guía cada diagnóstico, reparación y seguimiento.</h2>
+          <p class="muted-copy">
+            No solo buscamos reparar equipos. También queremos proteger tu información, cuidar tu
+            tiempo y ofrecer una atención técnica que realmente aporte valor.
+          </p>
+        </div>
+
+        <div class="mission-grid section-spacing">
+          <article v-for="item in missionVision" :key="item.title" class="mission-card">
+            <div class="mission-card-top">
+              <div class="icon-circle" :style="{ background: item.accent }">
+                <q-icon :name="item.icon" size="24px" />
+              </div>
+              <div>
+                <div class="eyebrow eyebrow--light mission-chip">{{ item.title }}</div>
+                <h3 class="mini-title mission-title">{{ item.title }}</h3>
+              </div>
+            </div>
+
+            <p class="muted-copy mission-copy">{{ item.body }}</p>
+
+            <ul class="service-list muted-copy mission-list">
+              <li v-for="point in item.points" :key="point">
+                {{ point }}
+              </li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
       <section class="hero-grid">
         <div class="surface-panel">
           <span class="eyebrow eyebrow--light">
             <q-icon name="route" size="18px" />
-            Como trabajamos
+            Cómo trabajamos
           </span>
-          <h2 class="section-title">Un proceso simple para ayudarte mas rapido.</h2>
+          <h2 class="section-title">Un proceso simple para ayudarte más rápido.</h2>
 
           <div class="timeline-list">
             <div v-for="(step, index) in processSteps" :key="step.title" class="timeline-item">
@@ -75,9 +111,9 @@
 
         <div class="stack-column">
           <div class="floating-card promise-card">
-            <div class="mini-title">Promesa de atencion</div>
+            <div class="mini-title">Promesa de atención</div>
             <p class="muted-copy">
-              Revisamos el problema, explicamos la solucion y coordinamos la atencion mas
+              Revisamos el problema, explicamos la solución y coordinamos la atención más
               conveniente para que tu equipo vuelva a funcionar bien.
             </p>
             <div class="chip-row">
@@ -90,9 +126,9 @@
           <div class="floating-card">
             <div class="mini-title">Lo que puedes esperar</div>
             <ul class="service-list muted-copy">
-              <li>Diagnostico claro y trato directo.</li>
-              <li>Recomendaciones utiles para tu equipo.</li>
-              <li>Atencion por WhatsApp o llamada.</li>
+              <li>Diagnóstico claro y explicación previa.</li>
+              <li>Cuidado de archivos y configuraciones importantes.</li>
+              <li>Atención por WhatsApp o llamada.</li>
               <li>Soporte remoto y coordinado en Sullana.</li>
             </ul>
           </div>
@@ -103,7 +139,7 @@
         <div>
           <span class="eyebrow">Listos para ayudarte</span>
           <h2 class="section-title cta-heading">
-            Si tu computadora o laptop falla, coordinemos la atencion hoy mismo.
+            Si tu computadora o laptop falla, coordinemos la atención hoy mismo.
           </h2>
         </div>
 
@@ -129,7 +165,7 @@
 </template>
 
 <script>
-import { aboutValues, homeMetrics, processSteps } from 'src/data/site'
+import { aboutValues, homeMetrics, missionVision, processSteps } from 'src/data/site'
 
 export default {
   name: 'NosotrosPage',
@@ -138,6 +174,7 @@ export default {
     return {
       aboutValues,
       homeMetrics,
+      missionVision,
       processSteps,
     }
   },
@@ -233,6 +270,46 @@ export default {
   line-height: 1.18;
 }
 
+.mission-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.mission-card {
+  display: grid;
+  gap: 16px;
+  padding: clamp(22px, 2.6vw, 28px);
+  border-radius: 26px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(244, 249, 255, 0.82));
+  border: 1px solid rgba(22, 32, 51, 0.06);
+  box-shadow: var(--ts-shadow-soft);
+}
+
+.mission-card-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.mission-chip {
+  margin-bottom: 10px;
+}
+
+.mission-title {
+  margin-bottom: 0;
+  font-size: 1.2rem;
+}
+
+.mission-copy {
+  margin: 0;
+}
+
+.mission-list {
+  display: grid;
+  gap: 10px;
+}
+
 .timeline-list {
   display: grid;
   gap: 18px;
@@ -299,6 +376,10 @@ export default {
     grid-template-columns: 1fr;
   }
 
+  .mission-grid {
+    grid-template-columns: 1fr;
+  }
+
   .timeline-item {
     grid-template-columns: 48px minmax(0, 1fr);
     gap: 14px;
@@ -306,6 +387,15 @@ export default {
 }
 
 @media (max-width: 540px) {
+  .story-copy {
+    padding: 18px;
+  }
+
+  .mission-card-top {
+    flex-direction: column;
+    gap: 12px;
+  }
+
   .timeline-item {
     grid-template-columns: 1fr;
   }

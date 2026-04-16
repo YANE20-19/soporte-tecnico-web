@@ -5,17 +5,17 @@
         <div class="hero-card hero-card--light">
           <span class="eyebrow eyebrow--light">
             <q-icon name="qr_code_2" size="18px" />
-            Pago movil
+            Pago móvil
           </span>
           <h1 class="section-title section-title--large">
-            Paga con Yape y confirma tu atencion en minutos.
+            Paga con Yape y confirma tu atención en minutos.
           </h1>
 
           <div v-if="servicio" class="payment-summary-card q-mt-xl">
             <div>
               <div class="mini-title">{{ servicio }}</div>
               <p class="muted-copy q-mb-none">
-                Confirma el pago y continua con la coordinacion del servicio.
+                Confirma el pago y continúa con la coordinación del servicio.
               </p>
             </div>
             <div class="payment-price">S/ {{ precio }}</div>
@@ -24,7 +24,7 @@
           <div class="instruction-list q-mt-xl">
             <div class="instruction-item">
               <div class="instruction-index">1</div>
-              <div>Escanea el QR o usa el numero directo.</div>
+              <div>Escanea el QR o usa el número directo.</div>
             </div>
             <div class="instruction-item">
               <div class="instruction-index">2</div>
@@ -32,7 +32,7 @@
             </div>
             <div class="instruction-item">
               <div class="instruction-index">3</div>
-              <div>Registra la operacion para continuar con la coordinacion.</div>
+              <div>Registra la operación para continuar con la coordinación.</div>
             </div>
           </div>
         </div>
@@ -46,7 +46,7 @@
 
           <img :src="qrUrl" alt="QR Yape" class="qr-image" />
 
-          <div class="tag-pill q-mx-auto">Numero: 915 174 884</div>
+          <div class="tag-pill q-mx-auto">Número: 915 174 884</div>
 
           <q-btn
             unelevated

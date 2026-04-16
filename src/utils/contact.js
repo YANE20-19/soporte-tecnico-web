@@ -5,7 +5,7 @@ export function buildWhatsAppUrl(message) {
 }
 
 export function buildServiceMessage(serviceName) {
-  return `Hola, quiero informacion sobre el servicio de ${serviceName}.`
+  return `Hola, quiero información sobre el servicio de ${serviceName}.`
 }
 
 export function buildServicePaymentQuery(service) {

@@ -4,7 +4,7 @@
       <q-toolbar class="page-width site-toolbar">
         <router-link to="/" class="brand-link">
           <div class="brand-mark">
-            <img src="/brand-mark.svg" alt="Logo de Soporte Tecnico" class="brand-logo" />
+            <img src="/brand-mark.svg" alt="Logo de Soporte Técnico" class="brand-logo" />
           </div>
 
           <div class="brand-copy">
@@ -72,7 +72,7 @@
       </q-list>
 
       <div class="drawer-panel">
-        <div class="mini-title">Atencion directa</div>
+        <div class="mini-title">Atención directa</div>
         <div class="drawer-text">{{ companyProfile.responseTime }}</div>
 
         <div class="drawer-contact-list">
@@ -95,8 +95,12 @@
       </div>
     </q-drawer>
 
-    <q-page-container>
-      <router-view />
+    <q-page-container class="site-page-container">
+      <router-view v-slot="{ Component, route }">
+        <transition name="site-page" mode="out-in">
+          <component :is="Component" :key="route.fullPath" />
+        </transition>
+      </router-view>
     </q-page-container>
 
     <footer class="site-footer">
@@ -104,7 +108,7 @@
         <div class="footer-brand">
           <div class="brand-inline">
             <div class="brand-mark brand-mark--footer">
-              <img src="/brand-mark.svg" alt="Logo de Soporte Tecnico" class="brand-logo" />
+              <img src="/brand-mark.svg" alt="Logo de Soporte Técnico" class="brand-logo" />
             </div>
             <div>
               <div class="footer-brand-name">{{ companyProfile.brand }}</div>
@@ -123,7 +127,7 @@
         </div>
 
         <div>
-          <div class="footer-title">Navegacion</div>
+          <div class="footer-title">Navegación</div>
           <div class="footer-links">
             <router-link
               v-for="link in navigationLinks"
@@ -175,7 +179,7 @@ export default {
       drawer: false,
       companyProfile,
       navigationLinks,
-      whatsappUrl: buildWhatsAppUrl('Hola, quiero informacion sobre sus servicios.'),
+      whatsappUrl: buildWhatsAppUrl('Hola, quiero información sobre sus servicios.'),
     }
   },
 
@@ -194,6 +198,27 @@ export default {
 <style scoped>
 .site-layout {
   color: var(--ts-ink);
+}
+
+.site-page-container {
+  position: relative;
+}
+
+:deep(.site-page-enter-active),
+:deep(.site-page-leave-active) {
+  transition:
+    opacity 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+:deep(.site-page-enter-from) {
+  opacity: 0;
+  transform: translate3d(0, 20px, 0);
+}
+
+:deep(.site-page-leave-to) {
+  opacity: 0;
+  transform: translate3d(0, -10px, 0);
 }
 
 .site-header {
@@ -467,6 +492,48 @@ export default {
     bottom: 14px;
     width: 54px;
     height: 54px;
+  }
+}
+
+@media (max-width: 420px) {
+  .site-toolbar {
+    min-height: 70px;
+    gap: 10px;
+    padding-block: 8px;
+  }
+
+  .brand-link {
+    max-width: none;
+    gap: 10px;
+  }
+
+  .brand-mark {
+    width: 46px;
+    height: 46px;
+  }
+
+  .brand-name {
+    font-size: 1rem;
+  }
+
+  .drawer-top {
+    padding: 20px 18px 14px;
+  }
+
+  .drawer-panel {
+    margin: 16px 12px 12px;
+    padding: 16px;
+  }
+
+  .footer-grid {
+    padding: 18px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :deep(.site-page-enter-active),
+  :deep(.site-page-leave-active) {
+    transition: none;
   }
 }
 </style>

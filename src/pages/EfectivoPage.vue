@@ -8,14 +8,14 @@
             Reserva con pago en efectivo
           </span>
           <h1 class="section-title section-title--large">
-            Reserva tu servicio y paga en efectivo al coordinar la atencion.
+            Reserva tu servicio y paga en efectivo al coordinar la atención.
           </h1>
 
           <div v-if="servicio" class="payment-summary-card q-mt-xl">
             <div>
               <div class="mini-title">{{ servicio }}</div>
               <p class="muted-copy q-mb-none">
-                Pago presencial o segun la coordinacion del servicio.
+                Pago presencial o según la coordinación del servicio.
               </p>
             </div>
             <div class="payment-price">S/ {{ precio }}</div>
@@ -43,7 +43,7 @@
           </div>
           <div class="mini-title">Solicitud en efectivo</div>
           <p class="muted-copy cash-copy">
-            Ideal para visitas coordinadas o clientes que prefieren pagar al recibir la atencion.
+            Ideal para visitas coordinadas o clientes que prefieren pagar al recibir la atención.
           </p>
 
           <q-btn

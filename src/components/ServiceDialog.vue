@@ -1,5 +1,14 @@
 <template>
-  <q-dialog :model-value="modelValue" @update:model-value="$emit('update:modelValue', $event)">
+  <q-dialog
+    persistent
+    no-refocus
+    :model-value="modelValue"
+    transition-show="fade"
+    transition-hide="fade"
+    transition-duration="180"
+    @hide="$emit('hide')"
+    @update:model-value="$emit('update:modelValue', $event)"
+  >
     <q-card v-if="service" class="service-dialog-card">
       <div class="service-dialog-media">
         <q-img :src="service.img" class="service-dialog-image" fit="cover" />
@@ -51,7 +60,7 @@
           flat
           label="Cerrar"
           class="ts-btn ts-btn--ghost"
-          @click="$emit('update:modelValue', false)"
+          @click="$emit('close')"
         />
         <q-btn
           unelevated
@@ -85,7 +94,7 @@ export default {
     },
   },
 
-  emits: ['update:modelValue', 'pay', 'contact'],
+  emits: ['update:modelValue', 'pay', 'contact', 'hide', 'close'],
 }
 </script>
 
@@ -140,6 +149,7 @@ export default {
   flex: 1 1 auto;
   min-height: 0;
   overflow-y: auto;
+  overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
   padding: clamp(22px, 3vw, 28px);
 }
@@ -192,11 +202,21 @@ export default {
 
 .dialog-actions {
   flex-shrink: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   padding: 0 28px 28px;
-  display: flex;
-  justify-content: flex-end;
   gap: 12px;
   background: #fffaf4;
+}
+
+.dialog-actions :deep(.q-btn) {
+  width: 100%;
+}
+
+@media (max-width: 860px) {
+  .dialog-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 700px) {
@@ -245,16 +265,20 @@ export default {
   }
 
   .dialog-actions {
-    flex-wrap: wrap;
+    grid-template-columns: 1fr;
     padding: 0 20px 20px;
-  }
-
-  .dialog-actions :deep(.q-btn) {
-    width: 100%;
   }
 }
 
 @media (max-width: 420px) {
+  .dialog-section {
+    padding: 18px;
+  }
+
+  .dialog-heading-row {
+    flex-direction: column;
+  }
+
   .service-dialog-media {
     height: 172px;
   }

@@ -5,7 +5,7 @@
         <div class="hero-card hero-card--light">
           <span class="eyebrow eyebrow--light">
             <q-icon name="inventory_2" size="18px" />
-            Servicios de soporte tecnico
+            Servicios de soporte técnico
           </span>
           <h1 class="section-title section-title--large">
             Soluciones para que tu computadora o laptop vuelva a rendir bien.
@@ -47,7 +47,7 @@
           </div>
 
           <div class="note-box q-mt-lg">
-            Si no sabes que servicio necesitas, tambien puedes pedir orientacion por WhatsApp antes
+            Si no sabes qué servicio necesitas, también puedes pedir orientación por WhatsApp antes
             de reservar.
           </div>
         </div>
@@ -122,7 +122,7 @@
             Ayuda inmediata
           </span>
           <h2 class="section-title">
-            Si aun no sabes que servicio elegir, te orientamos por WhatsApp.
+            Si aún no sabes qué servicio elegir, te orientamos por WhatsApp.
           </h2>
         </div>
 
@@ -142,7 +142,9 @@
     <ServiceDialog
       v-model="dialog"
       :service="servicioActivo"
+      @close="cerrarDetalle"
       @contact="consultarWhatsApp"
+      @hide="limpiarDetalle"
       @pay="irPagos"
     />
   </q-page>
@@ -162,7 +164,9 @@ export default {
 
   data() {
     return {
+      detalleScrollTop: 0,
       dialog: false,
+      restaurarScrollAlCerrar: false,
       servicioActivo: null,
       categoriaActiva: 'Todos',
       services,
@@ -189,14 +193,37 @@ export default {
 
   methods: {
     verDetalle(service) {
+      this.detalleScrollTop = window.scrollY || window.pageYOffset || 0
+      this.restaurarScrollAlCerrar = false
       this.servicioActivo = service
       this.dialog = true
+    },
+
+    cerrarDetalle() {
+      this.restaurarScrollAlCerrar = true
+      this.dialog = false
+    },
+
+    limpiarDetalle() {
+      const detalleScrollTop = this.detalleScrollTop
+      const restaurarScrollAlCerrar = this.restaurarScrollAlCerrar
+
+      this.restaurarScrollAlCerrar = false
+      this.servicioActivo = null
+
+      if (restaurarScrollAlCerrar) {
+        this.$nextTick(() => {
+          requestAnimationFrame(() => {
+            window.scrollTo(0, detalleScrollTop)
+          })
+        })
+      }
     },
 
     consultarWhatsApp(service = this.servicioActivo) {
       const message = service
         ? buildServiceMessage(service.t)
-        : 'Hola, quiero informacion sobre sus servicios.'
+        : 'Hola, quiero información sobre sus servicios.'
 
       window.open(buildWhatsAppUrl(message), '_blank')
     },
