@@ -1,0 +1,45 @@
+<svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="16" y1="12" x2="112" y2="116" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#16A7B5" />
+      <stop offset="0.5" stop-color="#0D6B7D" />
+      <stop offset="1" stop-color="#10253D" />
+    </linearGradient>
+    <linearGradient id="spark" x1="52" y1="75" x2="86" y2="54" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFB067" />
+      <stop offset="1" stop-color="#6DE2FF" />
+    </linearGradient>
+  </defs>
+
+  <rect x="8" y="8" width="112" height="112" rx="32" fill="url(#bg)" />
+  <rect x="10" y="10" width="108" height="108" rx="30" stroke="rgba(255,255,255,0.14)" />
+  <circle cx="36" cy="30" r="18" fill="rgba(255,255,255,0.08)" />
+
+  <path
+    d="M64 23V35M64 93V105M23 64H35M93 64H105"
+    stroke="#F8FBFF"
+    stroke-width="7"
+    stroke-linecap="round"
+    opacity="0.92"
+  />
+
+  <rect
+    x="36"
+    y="36"
+    width="56"
+    height="56"
+    rx="18"
+    stroke="#F8FBFF"
+    stroke-width="7"
+  />
+
+  <path
+    d="M52 74L63 63L72 72L85 55"
+    stroke="url(#spark)"
+    stroke-width="8"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  <circle cx="52" cy="74" r="4.5" fill="#FFB067" />
+  <circle cx="85" cy="55" r="4.5" fill="#6DE2FF" />
+</svg>

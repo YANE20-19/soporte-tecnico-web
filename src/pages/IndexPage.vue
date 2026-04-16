@@ -1,369 +1,501 @@
 <template>
-  <q-page class="home-page">
+  <q-page class="page-shell">
+    <div class="page-width page-grid">
+      <section class="hero-grid">
+        <div class="hero-card hero-card--dark">
+          <span class="eyebrow">
+            <q-icon name="verified" size="18px" />
+            Soporte tecnico para computadoras y laptops
+          </span>
 
-    <!-- 🔥 HERO -->
-    <section class="hero">
+          <h1 class="display-title">
+            Soluciones rapidas y confiables para tu computadora o laptop.
+          </h1>
 
-      <div class="overlay"></div>
+          <p class="lead-copy">
+            Mantenimiento, formateo, eliminacion de virus, optimizacion y soporte remoto con
+            atencion clara en Sullana.
+          </p>
 
-      <div class="hero-content text-center text-white">
-        <h1 class="title">
-          Soporte Técnico Profesional
-          <p class="badge">✔ Rápido • ✔ Seguro • ✔ Garantía</p>
-          
-        </h1>
+          <div class="chip-row q-mt-xl">
+            <span class="info-pill">WhatsApp o llamadas</span>
+            <span class="info-pill">Atencion remota</span>
+            <span class="info-pill">Diagnostico claro</span>
+          </div>
 
-        <p class="subtitle">
-          Reparación, mantenimiento y optimización de computadoras y laptops
-        </p>
-
-        <div class="q-mt-md">
-          <q-btn color="primary" label="Ver Servicios" to="/servicios" class="q-mr-sm"/>
-          <q-btn outline color="white" label="Contactar" to="/contacto"/>
+          <div class="action-row q-mt-xl">
+            <q-btn
+              unelevated
+              no-caps
+              label="Ver servicios"
+              to="/servicios"
+              class="ts-btn ts-btn--warm"
+            />
+            <q-btn
+              outline
+              no-caps
+              label="Solicitar diagnostico"
+              to="/contacto"
+              class="ts-btn ts-btn--ghost hero-btn-outline"
+            />
+          </div>
         </div>
-      </div>
-    </section>
 
-    <!-- 🚀 SERVICIOS -->
-    <section class="q-pa-xl services-section">
+        <div class="stack-column">
+          <div class="hero-visual-card">
+            <q-img
+              src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80"
+              class="hero-visual-image"
+            />
+            <div class="hero-visual-copy">
+              <div class="hero-visual-kicker">Atencion tecnica confiable</div>
+              <div class="hero-visual-title">
+                Recibe ayuda para lentitud, virus, errores y mantenimiento sin complicaciones.
+              </div>
+            </div>
+          </div>
 
-      <h4 class="text-center text-weight-bold q-mb-lg text-white">
-        Nuestros Servicios
-      </h4>
+          <div class="hero-metric-panel">
+            <div class="metric-grid">
+              <article v-for="item in heroHighlights" :key="item.title" class="metric-card">
+                <div class="metric-top">
+                  <div class="icon-circle icon-circle--small metric-icon">
+                    <q-icon :name="item.icon" size="18px" />
+                  </div>
+                  <div class="metric-value">{{ item.title }}</div>
+                </div>
+                <div class="metric-label">{{ item.body }}</div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
 
-      <div class="row q-col-gutter-lg">
+      <section class="surface-panel">
+        <span class="eyebrow eyebrow--light">
+          <q-icon name="apps" size="18px" />
+          Servicios destacados
+        </span>
+        <div class="page-header-copy">
+          <h2 class="section-title">
+            Servicios pensados para resolver lo que mas afecta tu equipo.
+          </h2>
+          <p class="muted-copy">
+            Desde mantenimiento preventivo hasta soporte remoto y recuperacion de datos, encuentra
+            una atencion practica para computadoras y laptops.
+          </p>
+        </div>
 
-        <div
-          class="col-12 col-sm-6 col-md-4"
-          v-for="(s, i) in servicios"
-          :key="i"
-        >
-          <q-card class="service-card cursor-pointer" @click="verDetalle(s)">
-
-            <div class="img-box">
-              <q-img :src="s.img" class="service-img" />
+        <div class="card-grid section-spacing">
+          <article
+            v-for="service in featuredServices"
+            :key="service.slug"
+            class="content-card service-card"
+          >
+            <div class="service-top">
+              <div class="icon-circle" :style="{ background: service.accent }">
+                <q-icon :name="service.icon" size="24px" />
+              </div>
+              <div class="service-price">S/ {{ service.precio }}</div>
             </div>
 
-            <q-card-section>
-              <div class="text-h6 text-weight-bold text-white">
-                {{ s.t }}
-              </div>
+            <div class="mini-title">{{ service.t }}</div>
+            <p class="muted-copy service-copy">{{ service.d }}</p>
 
-              <div class="text-grey-4 text-caption q-mt-sm">
-                {{ s.d }}
-              </div>
-            </q-card-section>
+            <div class="chip-row q-mb-md">
+              <span v-for="tag in service.tags.slice(0, 2)" :key="tag" class="tag-pill">
+                {{ tag }}
+              </span>
+            </div>
 
-          </q-card>
+            <div class="action-row">
+              <q-btn
+                flat
+                no-caps
+                label="Ver detalle"
+                class="ts-btn ts-btn--soft"
+                @click="verDetalle(service)"
+              />
+              <q-btn
+                unelevated
+                no-caps
+                label="Reservar servicio"
+                class="ts-btn ts-btn--primary"
+                @click="irPagos(service)"
+              />
+            </div>
+          </article>
         </div>
+      </section>
 
-      </div>
-    </section>
+      <section class="triple-grid">
+        <article v-for="step in processSteps" :key="step.title" class="support-card">
+          <div class="icon-circle" style="background: var(--ts-sand-soft)">
+            <q-icon :name="step.icon" size="24px" />
+          </div>
+          <h3 class="mini-title q-mt-md">{{ step.title }}</h3>
+          <p class="muted-copy q-mb-none">{{ step.body }}</p>
+        </article>
+      </section>
 
-    <!-- ⚙️ COMO TRABAJAMOS -->
-    <section class="q-pa-xl work-section text-center">
-
-      <h4 class="text-weight-bold q-mb-xl">
-        ¿Cómo trabajamos?
-      </h4>
-
-      <div class="row q-col-gutter-lg">
-
-        <div class="col-12 col-md-4">
-          <div class="work-box">
-            <q-icon name="support_agent" size="40px" color="primary"/>
-            <h6>Diagnóstico</h6>
-            <p>Analizamos tu equipo y detectamos el problema rápidamente.</p>
+      <section class="hero-grid">
+        <div class="surface-panel">
+          <span class="eyebrow eyebrow--light">
+            <q-icon name="verified" size="18px" />
+            Por que elegirnos
+          </span>
+          <h2 class="section-title">Atencion moderna, clara y enfocada en resolver.</h2>
+          <div class="card-grid section-spacing">
+            <article v-for="item in trustHighlights" :key="item.title" class="content-card">
+              <div class="mini-title">{{ item.title }}</div>
+              <p class="muted-copy q-mb-none">{{ item.body }}</p>
+            </article>
           </div>
         </div>
 
-        <div class="col-12 col-md-4">
-          <div class="work-box">
-            <q-icon name="build" size="40px" color="primary"/>
-            <h6>Solución</h6>
-            <p>Aplicamos la mejor solución con herramientas profesionales.</p>
+        <div class="floating-card testimonial-panel">
+          <span class="eyebrow eyebrow--light">
+            <q-icon name="star" size="18px" />
+            Compromisos del servicio
+          </span>
+          <div v-for="testimonial in testimonials" :key="testimonial.name" class="testimonial-card">
+            <div class="testimonial-stars">5/5</div>
+            <p class="testimonial-quote">"{{ testimonial.quote }}"</p>
+            <div class="testimonial-author">
+              <strong>{{ testimonial.name }}</strong>
+              <span>{{ testimonial.role }}</span>
+            </div>
           </div>
         </div>
+      </section>
 
-        <div class="col-12 col-md-4">
-          <div class="work-box">
-            <q-icon name="verified" size="40px" color="primary"/>
-            <h6>Garantía</h6>
-            <p>Te entregamos tu equipo funcionando y con garantía.</p>
-          </div>
+      <section class="cta-panel">
+        <div>
+          <div class="eyebrow">Contacto directo</div>
+          <h2 class="section-title cta-title">
+            Escribenos y coordinamos la mejor solucion para tu equipo.
+          </h2>
+          <p class="lead-copy cta-copy">
+            WhatsApp o llamadas: {{ companyProfile.phoneLabel }}. Correo:
+            {{ companyProfile.email }}. Atendemos en {{ companyProfile.location }}.
+          </p>
         </div>
 
-      </div>
-    </section>
-
-    <!-- ⭐ BENEFICIOS -->
-    <section class="q-pa-xl benefits-section">
-
-      <div class="row q-col-gutter-lg text-center">
-
-        <div class="col-6 col-md-3">
-          <h4 class="text-primary">+500</h4>
-          <p>Equipos reparados</p>
+        <div class="action-row">
+          <q-btn
+            unelevated
+            no-caps
+            label="Ver catalogo completo"
+            to="/servicios"
+            class="ts-btn ts-btn--warm"
+          />
+          <q-btn
+            unelevated
+            no-caps
+            label="Hablar por WhatsApp"
+            class="ts-btn ts-btn--soft"
+            @click="consultarWhatsApp()"
+          />
         </div>
+      </section>
+    </div>
 
-        <div class="col-6 col-md-3">
-          <h4 class="text-primary">100%</h4>
-          <p>Clientes satisfechos</p>
-        </div>
-
-        <div class="col-6 col-md-3">
-          <h4 class="text-primary">24/7</h4>
-          <p>Soporte disponible</p>
-        </div>
-
-        <div class="col-6 col-md-3">
-          <h4 class="text-primary">Rápido</h4>
-          <p>Atención inmediata</p>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- 💬 CTA FINAL -->
-    <section class="cta-section text-center text-white">
-
-      <h4>¿Tu computadora está lenta o con fallas?</h4>
-
-      <p class="q-mt-sm">
-        Contáctanos ahora y solucionamos tu problema rápidamente
-      </p>
-
-      <q-btn
-        color="green"
-        label="Escribir por WhatsApp"
-        class="q-mt-md"
-        @click="irWhatsApp"
-      />
-
-    </section>
-
-    <!-- 🔍 MODAL -->
-    <q-dialog v-model="dialog">
-      <q-card class="modal-card">
-
-        <q-img :src="servicioActivo?.img" class="modal-img" />
-
-        <q-card-section>
-          <div class="text-h6 text-weight-bold">
-            {{ servicioActivo?.t }}
-          </div>
-
-          <div class="text-grey-7 q-mt-sm">
-            {{ servicioActivo?.detalle }}
-          </div>
-        </q-card-section>
-
-        <q-card-actions align="right">
-          <q-btn flat label="Cerrar" v-close-popup />
-          <q-btn color="green" label="Solicitar" @click="irWhatsApp"/>
-        </q-card-actions>
-
-      </q-card>
-    </q-dialog>
-
+    <ServiceDialog
+      v-model="dialog"
+      :service="servicioActivo"
+      @contact="consultarWhatsApp"
+      @pay="irPagos"
+    />
   </q-page>
 </template>
 
 <script>
+import ServiceDialog from 'src/components/ServiceDialog.vue'
+import {
+  companyProfile,
+  processSteps,
+  services,
+  testimonials,
+  trustHighlights,
+} from 'src/data/site'
+import { buildServiceMessage, buildServicePaymentQuery, buildWhatsAppUrl } from 'src/utils/contact'
+
 export default {
+  name: 'IndexPage',
+
+  components: {
+    ServiceDialog,
+  },
+
   data() {
     return {
+      companyProfile,
       dialog: false,
       servicioActivo: null,
-
-      servicios: [
+      processSteps,
+      testimonials,
+      trustHighlights,
+      featuredServices: services.slice(0, 4),
+      heroHighlights: [
         {
-          t: 'Mantenimiento de PC',
-          d: 'Limpieza y optimización',
-          detalle: 'Limpieza interna, cambio de pasta térmica y mejora del rendimiento.',
-          img: 'https://images.pexels.com/photos/3825581/pexels-photo-3825581.jpeg',
+          title: 'PC y Laptop',
+          body: 'Soporte tecnico integral',
+          icon: 'computer',
         },
         {
-          t: 'Eliminación de Virus',
-          d: 'Protección total',
-          detalle: 'Eliminamos virus y malware completamente.',
-          img: 'https://images.pexels.com/photos/5380664/pexels-photo-5380664.jpeg',
+          title: 'Remoto',
+          body: 'Atencion rapida donde estes',
+          icon: 'headset_mic',
         },
         {
-          t: 'Formateo e Instalación',
-          d: 'Sistema limpio',
-          detalle: 'Instalamos sistema operativo y programas.',
-          img: 'https://images.pexels.com/photos/1714208/pexels-photo-1714208.jpeg',
-        }
-      ]
+          title: 'Agil',
+          body: 'Diagnostico inicial claro',
+          icon: 'bolt',
+        },
+        {
+          title: 'Confiable',
+          body: 'Proceso seguro y ordenado',
+          icon: 'verified_user',
+        },
+      ],
     }
   },
 
   methods: {
-    verDetalle(s) {
-      this.servicioActivo = s
+    verDetalle(service) {
+      this.servicioActivo = service
       this.dialog = true
     },
 
-    irWhatsApp() {
-      const servicio = this.servicioActivo?.t || ''
-      const numero = '51915174884'
+    consultarWhatsApp(service = this.servicioActivo) {
+      const message = service
+        ? buildServiceMessage(service.t)
+        : 'Hola, quiero informacion sobre sus servicios.'
 
-      const url = `https://wa.me/${numero}?text=${encodeURIComponent(
-        `Hola, quiero información sobre: ${servicio}`
-      )}`
+      window.open(buildWhatsAppUrl(message), '_blank')
+    },
 
-      window.open(url, '_blank')
-    }
-  }
+    irPagos(service = this.servicioActivo) {
+      if (!service) {
+        this.$router.push('/servicios')
+        return
+      }
+
+      this.$router.push({
+        path: '/pagos',
+        query: buildServicePaymentQuery(service),
+      })
+    },
+  },
 }
 </script>
 
-<style>
-/* HERO */
-/* 🌟 HERO MEJORADO */
-.hero {
-  position: relative;
-  height: 90vh;
-
-  background:
-    linear-gradient(135deg, rgba(0, 153, 255, 0.6), rgba(0, 0, 80, 0.8)),
-    url('https://images.unsplash.com/photo-1531297484001-80022131f5a1?auto=format&fit=crop&w=1600&q=80');
-
-  background-size: cover;
-  background-position: center;
+<style scoped>
+.hero-grid {
+  align-items: start;
 }
 
-/* 🔥 overlay más claro */
-.overlay {
+.display-title {
+  max-width: 10.5ch;
+  margin-bottom: 20px;
+  font-size: clamp(2.8rem, 4vw, 4.8rem);
+  line-height: 0.94;
+  text-wrap: balance;
+}
+
+.lead-copy {
+  max-width: 48ch;
+}
+
+.hero-visual-card {
+  position: relative;
+  min-height: clamp(320px, 42vw, 460px);
+  overflow: hidden;
+  border-radius: 34px;
+  border: 1px solid var(--ts-border);
+  box-shadow: var(--ts-shadow);
+}
+
+.hero-visual-image {
+  width: 100%;
+  height: 100%;
+  min-height: clamp(320px, 42vw, 460px);
+}
+
+.hero-visual-copy {
   position: absolute;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.4);
+  inset: auto 20px 20px;
+  max-width: min(100%, 420px);
+  padding: 18px;
+  border-radius: 24px;
+  background: rgba(11, 24, 38, 0.72);
+  backdrop-filter: blur(14px);
+  color: #fff;
 }
 
-/* CONTENIDO */
-.hero-content {
-  position: relative;
-  z-index: 2;
+.hero-visual-kicker {
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.78;
 }
 
-/* ✨ TÍTULO PRO */
-.title {
-  font-size: 3.2rem;
-  font-weight: 800;
-  color: #ffffff;
-
-  text-shadow:
-    0 0 10px rgba(0, 200, 255, 0.7),
-    0 0 20px rgba(0, 200, 255, 0.5),
-    0 5px 25px rgba(0, 0, 0, 0.8);
+.hero-visual-title {
+  margin-top: 6px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.3rem;
+  line-height: 1.2;
 }
 
-/* SUBTITULO MÁS CLARO */
-.subtitle {
-  color: #f1f5f9;
-  font-size: 1.2rem;
-  text-shadow: 0 2px 10px rgba(0,0,0,0.6);
-}
-
-/* BADGE */
-.badge {
-  margin-top: 10px;
-  color: #38bdf8;
-  font-weight: 600;
-}
-
-/* BOTONES MÁS PRO */
-.q-btn {
-  font-weight: bold;
-  border-radius: 10px;
-  transition: 0.3s;
-}
-
-.q-btn:hover {
-  transform: scale(1.05);
-}
-
-/* 🌌 SERVICIOS */
-.services-section {
-  background: linear-gradient(135deg, #020617, #0f172a);
-}
-
-/* TARJETAS PRO */
-.service-card {
-  background: rgba(255,255,255,0.07);
-  backdrop-filter: blur(10px);
-  border-radius: 18px;
-  overflow: hidden;
-  transition: 0.4s;
-}
-
-.service-card:hover {
-  transform: translateY(-12px) scale(1.03);
-  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-}
-
-/* IMAGEN PERFECTA */
-.img-box {
-  height: 200px;
-  overflow: hidden;
-}
-
-.service-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: 0.5s;
-}
-
-.service-card:hover .service-img {
-  transform: scale(1.1);
-}
-
-/* ⚙️ COMO TRABAJAMOS */
-.work-section {
-  background: #f8fafc;
-}
-
-.work-box {
+.hero-metric-panel {
   padding: 20px;
-  transition: 0.3s;
+  border-radius: 28px;
+  background: linear-gradient(180deg, rgba(255, 250, 244, 0.88), rgba(255, 255, 255, 0.88));
+  border: 1px solid rgba(22, 32, 51, 0.06);
+  box-shadow: var(--ts-shadow-soft);
 }
 
-.work-box:hover {
-  transform: scale(1.05);
+.metric-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
 }
 
-/* 📊 BENEFICIOS */
-.benefits-section {
-  background: linear-gradient(135deg, #e0f2fe, #f1f5f9);
+.metric-card {
+  display: grid;
+  gap: 12px;
+  min-height: 0;
+  padding: 18px;
+  border-radius: 22px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(247, 244, 240, 0.84));
 }
 
-.benefits-section h4 {
-  font-size: 2rem;
-  font-weight: bold;
+.metric-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-/* 💬 CTA */
-.cta-section {
-  background: linear-gradient(135deg, #0ea5e9, #1e3a8a);
-  padding: 70px;
+.metric-icon {
+  background: var(--ts-sky-soft);
 }
 
-.cta-section h4 {
-  font-size: 1.8rem;
-  font-weight: bold;
+.metric-value {
+  font-size: 1.35rem;
+  line-height: 1.05;
 }
 
-/* MODAL */
-.modal-card {
-  max-width: 500px;
-  border-radius: 16px;
+.metric-label {
+  max-width: 22ch;
+  font-size: 0.97rem;
+  line-height: 1.45;
 }
 
-.modal-img {
-  height: 200px;
-  object-fit: cover;
+.hero-btn-outline {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.24);
+}
+
+.service-card {
+  display: grid;
+  gap: 16px;
+  align-content: start;
+}
+
+.service-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.service-price {
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(15, 93, 115, 0.08);
+  color: var(--ts-primary);
+  font-weight: 700;
+}
+
+.service-copy {
+  margin: 0;
+}
+
+.testimonial-panel {
+  display: grid;
+  gap: 14px;
+}
+
+.testimonial-card {
+  padding: 18px;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(22, 32, 51, 0.06);
+}
+
+.testimonial-stars {
+  color: var(--ts-accent);
+  letter-spacing: 0.2em;
+  font-size: 0.95rem;
+}
+
+.testimonial-quote {
+  margin: 10px 0 14px;
+  color: var(--ts-ink);
+}
+
+.testimonial-author {
+  display: grid;
+  color: var(--ts-muted);
+}
+
+.cta-panel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: clamp(24px, 3vw, 34px);
+  border-radius: 34px;
+  background:
+    linear-gradient(135deg, rgba(15, 93, 115, 0.94), rgba(23, 135, 154, 0.88)),
+    linear-gradient(135deg, #0f5d73, #2f8da0);
+  color: #fff;
+  box-shadow: 0 22px 48px rgba(15, 93, 115, 0.22);
+}
+
+.cta-title,
+.cta-copy {
+  color: inherit;
+}
+
+@media (max-width: 1024px) {
+  .cta-panel {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 768px) {
+  .display-title {
+    max-width: none;
+  }
+
+  .hero-metric-panel {
+    padding: 14px;
+  }
+
+  .metric-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-visual-copy {
+    inset: auto 16px 16px;
+    padding: 16px;
+  }
+}
+
+@media (max-width: 540px) {
+  .hero-visual-title {
+    font-size: 1.15rem;
+  }
 }
 </style>

@@ -1,333 +1,352 @@
 <template>
-  <q-page class="catalog-page q-pa-xl">
-    <div class="hero-catalog text-white q-mb-xl">
-      <div class="hero-overlay"></div>
-      <div class="hero-content text-center">
-        <div class="text-overline text-cyan-3">Catálogo de servicios</div>
-        <h3 class="text-h3 text-weight-bold q-mt-sm">
-          Soluciones profesionales para tu equipo
-        </h3>
-        <p class="text-subtitle1 q-mt-sm text-grey-3">
-          Revisión, mantenimiento, limpieza, soporte remoto y recuperación de datos.
-        </p>
-      </div>
-    </div>
+  <q-page class="page-shell">
+    <div class="page-width page-grid">
+      <section class="hero-grid">
+        <div class="hero-card hero-card--light">
+          <span class="eyebrow eyebrow--light">
+            <q-icon name="inventory_2" size="18px" />
+            Servicios de soporte tecnico
+          </span>
+          <h1 class="section-title section-title--large">
+            Soluciones para que tu computadora o laptop vuelva a rendir bien.
+          </h1>
+          <p class="muted-copy lead-copy">
+            Encuentra servicios para lentitud, virus, formateo, mantenimiento, respaldo de archivos
+            y soporte remoto. Elige la opcion que mejor se adapte a tu problema.
+          </p>
 
-    <div class="row q-col-gutter-md q-mb-lg">
-      <div class="col-12">
-        <q-chip outline color="primary" icon="build">Mantenimiento</q-chip>
-        <q-chip outline color="primary" icon="security" class="q-ml-sm">Virus</q-chip>
-        <q-chip outline color="primary" icon="computer" class="q-ml-sm">Soporte</q-chip>
-        <q-chip outline color="primary" icon="cloud_upload" class="q-ml-sm">Backup</q-chip>
-      </div>
-    </div>
+          <div class="chip-row q-mt-xl">
+            <button
+              v-for="category in categories"
+              :key="category"
+              type="button"
+              class="filter-chip"
+              :class="{ 'filter-chip--active': categoriaActiva === category }"
+              @click="categoriaActiva = category"
+            >
+              {{ category }}
+            </button>
+          </div>
+        </div>
 
-    <div class="row q-col-gutter-xl">
-      <div
-        class="col-12 col-sm-6 col-md-4"
-        v-for="(s, i) in servicios"
-        :key="i"
-      >
-        <q-card class="catalog-card cursor-pointer" @click="verDetalle(s)">
-          <div class="img-box">
-            <q-img
-              :src="s.img"
-              class="catalog-img"
-              fit="cover"
-              loading="lazy"
-              :position="s.pos || 'center'"
-            />
-            <div class="img-gradient"></div>
-            <div class="price-badge">S/ {{ s.precio }}</div>
+        <div class="floating-card catalog-side-panel">
+          <div class="mini-title">Resumen de servicios</div>
+          <div class="catalog-summary">
+            <div class="catalog-summary-item">
+              <strong>{{ filteredServices.length }}</strong>
+              <span>servicios visibles</span>
+            </div>
+            <div class="catalog-summary-item">
+              <strong>{{ categories.length - 1 }}</strong>
+              <span>categorias</span>
+            </div>
+            <div class="catalog-summary-item">
+              <strong>S/ {{ cheapestPrice }}</strong>
+              <span>precio inicial</span>
+            </div>
           </div>
 
-          <q-card-section>
-            <div class="row items-center no-wrap">
-              <q-icon :name="s.icon" size="22px" color="primary" class="q-mr-sm" />
-              <div class="text-h6 text-weight-bold ellipsis">
-                {{ s.t }}
+          <div class="note-box q-mt-lg">
+            Si no sabes que servicio necesitas, tambien puedes pedir orientacion por WhatsApp antes
+            de reservar.
+          </div>
+        </div>
+      </section>
+
+      <section class="card-grid">
+        <article
+          v-for="service in filteredServices"
+          :key="service.slug"
+          class="content-card catalog-card"
+        >
+          <div class="catalog-media">
+            <q-img :src="service.img" fit="cover" class="catalog-image" />
+            <div class="catalog-media-overlay"></div>
+            <div class="catalog-media-top">
+              <span class="catalog-category">{{ service.category }}</span>
+              <span class="catalog-price">S/ {{ service.precio }}</span>
+            </div>
+          </div>
+
+          <div class="catalog-content">
+            <div class="catalog-header">
+              <div class="icon-circle icon-circle--small" :style="{ background: service.accent }">
+                <q-icon :name="service.icon" size="20px" />
+              </div>
+              <div class="mini-title q-mb-none">{{ service.t }}</div>
+            </div>
+
+            <p class="muted-copy">{{ service.d }}</p>
+
+            <div class="chip-row q-mb-md">
+              <span v-for="tag in service.tags" :key="tag" class="tag-pill">
+                {{ tag }}
+              </span>
+            </div>
+
+            <div class="catalog-list">
+              <div
+                v-for="item in service.incluye.slice(0, 2)"
+                :key="item"
+                class="catalog-list-item"
+              >
+                <q-icon name="check_circle" color="positive" size="18px" />
+                <span>{{ item }}</span>
               </div>
             </div>
 
-            <div class="text-grey-7 text-caption q-mt-sm">
-              {{ s.d }}
+            <div class="action-row q-mt-md">
+              <q-btn
+                flat
+                no-caps
+                label="Ver detalle"
+                class="ts-btn ts-btn--soft"
+                @click="verDetalle(service)"
+              />
+              <q-btn
+                unelevated
+                no-caps
+                label="Reservar servicio"
+                class="ts-btn ts-btn--primary"
+                @click="irPagos(service)"
+              />
             </div>
+          </div>
+        </article>
+      </section>
 
-            <div class="q-mt-md">
-              <q-chip
-                dense
-                square
-                color="grey-2"
-                text-color="grey-8"
-                v-for="tag in s.tags"
-                :key="tag"
-                class="q-mr-xs q-mb-xs"
-              >
-                {{ tag }}
-              </q-chip>
-            </div>
-          </q-card-section>
+      <section class="surface-panel final-banner">
+        <div>
+          <span class="eyebrow eyebrow--light">
+            <q-icon name="bolt" size="18px" />
+            Ayuda inmediata
+          </span>
+          <h2 class="section-title">
+            Si aun no sabes que servicio elegir, te orientamos por WhatsApp.
+          </h2>
+        </div>
 
-          <q-card-actions align="right" class="q-pa-md">
-            <q-btn flat color="primary" icon="visibility" label="Ver detalle" />
-          </q-card-actions>
-        </q-card>
-      </div>
+        <div class="action-row">
+          <q-btn
+            unelevated
+            no-caps
+            label="Consultar por WhatsApp"
+            class="ts-btn ts-btn--warm"
+            @click="consultarWhatsApp()"
+          />
+          <q-btn flat no-caps label="Ir a contacto" to="/contacto" class="ts-btn ts-btn--ghost" />
+        </div>
+      </section>
     </div>
 
-    <q-dialog v-model="dialog">
-      <q-card class="service-dialog">
-        <q-img :src="servicioActivo?.img" class="dialog-img" />
-
-        <q-card-section>
-          <div class="row items-center no-wrap q-mb-sm">
-            <q-icon :name="servicioActivo?.icon" size="24px" color="primary" class="q-mr-sm" />
-            <div class="text-h5 text-weight-bold">
-              {{ servicioActivo?.t }}
-            </div>
-          </div>
-
-          <div class="text-primary text-h6 q-mb-sm">
-            Precio: S/ {{ servicioActivo?.precio }}
-          </div>
-
-          <div class="text-grey-8 q-mb-md">
-            {{ servicioActivo?.detalle }}
-          </div>
-
-          <div class="text-weight-medium q-mb-xs">Incluye:</div>
-          <ul class="q-pl-lg q-mb-none">
-            <li v-for="item in (servicioActivo?.incluye || [])" :key="item">
-              {{ item }}
-            </li>
-          </ul>
-        </q-card-section>
-
-        <q-card-actions align="right" class="q-pa-md">
-          <q-btn flat label="Cerrar" color="grey" v-close-popup />
-          <q-btn
-            color="primary"
-            icon="chat"
-            label="Solicitar servicio"
-            @click="solicitarServicio"
-          />
-        </q-card-actions>
-      </q-card>
-    </q-dialog>
+    <ServiceDialog
+      v-model="dialog"
+      :service="servicioActivo"
+      @contact="consultarWhatsApp"
+      @pay="irPagos"
+    />
   </q-page>
 </template>
 
 <script>
+import ServiceDialog from 'src/components/ServiceDialog.vue'
+import { services } from 'src/data/site'
+import { buildServiceMessage, buildServicePaymentQuery, buildWhatsAppUrl } from 'src/utils/contact'
+
 export default {
-  data () {
+  name: 'ServiciosPage',
+
+  components: {
+    ServiceDialog,
+  },
+
+  data() {
     return {
       dialog: false,
       servicioActivo: null,
-      numeroWhatsApp: '51915174884',
-      servicios: [
-        {
-          t: 'Mantenimiento de PC',
-          d: 'Limpieza y optimización completa',
-          detalle: 'Limpieza interna, cambio de pasta térmica, revisión de ventilación y mejora general del rendimiento.',
-          precio: 50,
-          icon: 'build',
-          img: 'https://images.pexels.com/photos/3825581/pexels-photo-3825581.jpeg',
-          pos: 'center',
-          tags: ['Hardware', 'Limpieza', 'Optimización'],
-          incluye: ['Limpieza interna', 'Cambio de pasta térmica', 'Prueba de rendimiento']
-        },
-        {
-          t: 'Limpieza de Hardware',
-          d: 'Eliminación de polvo y mantenimiento físico',
-          detalle: 'Retiramos polvo acumulado en ventiladores, placa, fuente y componentes para evitar sobrecalentamiento.',
-          precio: 35,
-          icon: 'cleaning_services',
-          img: 'https://images.pexels.com/photos/4050315/pexels-photo-4050315.jpeg',
-          pos: 'center',
-          tags: ['Limpieza', 'Temperatura', 'Hardware'],
-          incluye: ['Soplado profesional', 'Limpieza de ventiladores', 'Revisión visual']
-        },
-        {
-          t: 'Eliminación de Virus',
-          d: 'Protección total contra amenazas',
-          detalle: 'Eliminamos virus, malware, adware y software no deseado para devolver estabilidad a tu equipo.',
-          precio: 60,
-          icon: 'security',
-          img: 'https://images.pexels.com/photos/5380664/pexels-photo-5380664.jpeg',
-          pos: 'center',
-          tags: ['Seguridad', 'Antivirus', 'Limpieza'],
-          incluye: ['Escaneo completo', 'Eliminación de amenazas', 'Recomendación de protección']
-        },
-        {
-          t: 'Formateo e Instalación',
-          d: 'Sistema limpio y optimizado',
-          detalle: 'Instalamos sistema operativo, drivers y programas esenciales para dejar tu equipo listo para trabajar.',
-          precio: 70,
-          icon: 'computer',
-          img: 'https://images.pexels.com/photos/1714208/pexels-photo-1714208.jpeg',
-          pos: 'center',
-          tags: ['Windows', 'Drivers', 'Software'],
-          incluye: ['Instalación del sistema', 'Drivers', 'Programas básicos']
-        },
-        {
-          t: 'Optimización de Equipos',
-          d: 'Mayor velocidad y rendimiento',
-          detalle: 'Ajustamos el sistema para reducir procesos innecesarios y mejorar el inicio, la velocidad y la fluidez.',
-          precio: 45,
-          icon: 'speed',
-          img: 'https://images.pexels.com/photos/1181354/pexels-photo-1181354.jpeg',
-          pos: 'center',
-          tags: ['Rendimiento', 'Velocidad', 'Ajustes'],
-          incluye: ['Limpieza de software', 'Optimización de inicio', 'Ajustes de sistema']
-        },
-        {
-          t: 'Soporte Remoto',
-          d: 'Ayuda inmediata a distancia',
-          detalle: 'Te ayudamos por conexión remota para resolver problemas sin que salgas de casa o de tu oficina.',
-          precio: 40,
-          icon: 'support_agent',
-          img: 'https://images.pexels.com/photos/3182773/pexels-photo-3182773.jpeg',
-          pos: 'center',
-          tags: ['Remoto', 'Soporte', 'Online'],
-          incluye: ['Asistencia remota', 'Diagnóstico en vivo', 'Solución guiada']
-        },
-        {
-          t: 'Recuperación de Datos',
-          d: 'Recuperamos tu información',
-          detalle: 'Recuperamos archivos borrados o dañados desde discos, USB y otros dispositivos de almacenamiento.',
-          precio: 90,
-          icon: 'storage',
-          img: 'https://images.pexels.com/photos/577585/pexels-photo-577585.jpeg',
-          pos: 'center',
-          tags: ['Datos', 'Rescate', 'Archivos'],
-          incluye: ['Evaluación del medio', 'Recuperación posible', 'Reporte del estado']
-        },
-        {
-          t: 'Respaldo de Información',
-          d: 'Backup seguro de tus archivos',
-          detalle: 'Creamos copias de seguridad para proteger tu información importante y evitar pérdidas futuras.',
-          precio: 55,
-          icon: 'cloud_upload',
-          img: 'https://images.pexels.com/photos/325229/pexels-photo-325229.jpeg',
-          pos: 'center',
-          tags: ['Backup', 'Seguridad', 'Nube'],
-          incluye: ['Copia de archivos', 'Organización de carpetas', 'Verificación']
-        }
-      ]
+      categoriaActiva: 'Todos',
+      services,
     }
   },
 
+  computed: {
+    categories() {
+      return ['Todos', ...new Set(this.services.map((service) => service.category))]
+    },
+
+    filteredServices() {
+      if (this.categoriaActiva === 'Todos') {
+        return this.services
+      }
+
+      return this.services.filter((service) => service.category === this.categoriaActiva)
+    },
+
+    cheapestPrice() {
+      return Math.min(...this.services.map((service) => service.precio))
+    },
+  },
+
   methods: {
-    verDetalle (servicio) {
-      this.servicioActivo = servicio
+    verDetalle(service) {
+      this.servicioActivo = service
       this.dialog = true
     },
 
-    solicitarServicio () {
-      const servicio = this.servicioActivo?.t || ''
-      const mensaje = `Hola, estoy interesado en el servicio de: *${servicio}*`
-      const url = `https://wa.me/${this.numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`
-      window.open(url, '_blank')
-    }
-  }
+    consultarWhatsApp(service = this.servicioActivo) {
+      const message = service
+        ? buildServiceMessage(service.t)
+        : 'Hola, quiero informacion sobre sus servicios.'
+
+      window.open(buildWhatsAppUrl(message), '_blank')
+    },
+
+    irPagos(service = this.servicioActivo) {
+      if (!service) return
+
+      this.$router.push({
+        path: '/pagos',
+        query: buildServicePaymentQuery(service),
+      })
+    },
+  },
 }
 </script>
 
 <style scoped>
-.catalog-page {
-  background: linear-gradient(180deg, #f8fafc 0%, #eef2ff 100%);
-  min-height: 100vh;
+.section-title--large {
+  font-size: clamp(2rem, 3vw, 3.4rem);
+  max-width: 12ch;
+  line-height: 1;
 }
 
-.hero-catalog {
-  position: relative;
-  overflow: hidden;
-  border-radius: 24px;
-  min-height: 220px;
-  background:
-    radial-gradient(circle at 20% 20%, rgba(34, 211, 238, 0.18), transparent 35%),
-    radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.18), transparent 35%),
-    linear-gradient(135deg, #0f172a, #1e293b);
+.filter-chip {
+  padding: 12px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(22, 32, 51, 0.08);
+  background: rgba(255, 255, 255, 0.68);
+  color: var(--ts-muted);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.filter-chip--active,
+.filter-chip:hover {
+  color: #fff;
+  background: var(--ts-primary);
+  border-color: var(--ts-primary);
+}
+
+.catalog-side-panel {
+  display: grid;
+  align-content: start;
+  gap: 18px;
+}
+
+.catalog-summary {
+  display: grid;
+  gap: 14px;
+}
+
+.catalog-summary-item {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.74);
+  border: 1px solid rgba(22, 32, 51, 0.06);
 }
 
-.hero-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(15, 23, 42, 0.15), rgba(15, 23, 42, 0.55));
-}
-
-.hero-content {
-  position: relative;
-  z-index: 2;
-  max-width: 760px;
-  padding: 24px;
+.catalog-summary-item strong {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.2rem;
 }
 
 .catalog-card {
-  border-radius: 20px;
-  overflow: hidden;
-  transition: all 0.35s ease;
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(8px);
-  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+  padding: 0;
 }
 
-.catalog-card:hover {
-  transform: translateY(-10px) scale(1.01);
-  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.18);
-}
-
-.img-box {
+.catalog-media {
   position: relative;
-  height: 210px;
+  min-height: 220px;
+  aspect-ratio: 16 / 10;
   overflow: hidden;
+  border-radius: 24px 24px 0 0;
 }
 
-.catalog-img {
+.catalog-image {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: center;
-  transition: transform 0.55s ease;
 }
 
-.catalog-card:hover .catalog-img {
-  transform: scale(1.08);
-}
-
-.img-gradient {
+.catalog-media-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, transparent 35%, rgba(0, 0, 0, 0.35));
-  pointer-events: none;
+  background: linear-gradient(180deg, rgba(10, 18, 31, 0.04), rgba(10, 18, 31, 0.55));
 }
 
-.price-badge {
+.catalog-media-top {
   position: absolute;
-  top: 14px;
-  left: 14px;
-  z-index: 3;
-  background: rgba(15, 23, 42, 0.85);
-  color: #fff;
-  padding: 6px 10px;
+  inset: 16px 16px auto;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.catalog-category,
+.catalog-price {
+  padding: 8px 12px;
   border-radius: 999px;
+  background: rgba(255, 250, 244, 0.88);
   font-weight: 700;
-  font-size: 0.85rem;
-  backdrop-filter: blur(8px);
 }
 
-.service-dialog {
-  max-width: 560px;
-  width: 100%;
-  border-radius: 18px;
-  overflow: hidden;
+.catalog-content {
+  display: grid;
+  gap: 14px;
+  padding: clamp(20px, 2vw, 24px);
 }
 
-.dialog-img {
-  height: 220px;
-  object-fit: cover;
+.catalog-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.catalog-list {
+  display: grid;
+  gap: 10px;
+}
+
+.catalog-list-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  color: var(--ts-muted);
+}
+
+.final-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 22px;
+}
+
+@media (max-width: 1024px) {
+  .final-banner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 768px) {
+  .section-title--large {
+    max-width: none;
+  }
 }
 </style>

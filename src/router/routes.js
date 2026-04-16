@@ -10,14 +10,14 @@ const routes = [
       { path: 'pagos', component: () => import('pages/PagosPage.vue') },
       { path: 'yape', component: () => import('pages/YapePage.vue') },
       { path: 'tarjeta', component: () => import('pages/TarjetaPage.vue') },
-      { path: 'efectivo', component: () => import('pages/EfectivoPage.vue') }
-    ]
+      { path: 'efectivo', component: () => import('pages/EfectivoPage.vue') },
+    ],
   },
 
   {
     path: '/:catchAll(.*)*',
-    component: () => import('pages/ErrorNotFound.vue')
-  }
+    component: () => import('pages/ErrorNotFound.vue'),
+  },
 ]
 
 export default routes

@@ -31,16 +31,16 @@ export default defineConfig((/* ctx */) => {
     ],
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-file#build
-build: {
-  target: {
-    browser: 'baseline-widely-available',
-    node: 'node22',
-  },
+    build: {
+      target: {
+        browser: 'baseline-widely-available',
+        node: 'node22',
+      },
 
-  vueRouterMode: 'hash',
+      vueRouterMode: 'hash',
 
-  vitePlugins: [], // 👈 DEJAR VACÍO
-},
+      vitePlugins: [], // 👈 DEJAR VACÍO
+    },
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-file#devserver
     devServer: {

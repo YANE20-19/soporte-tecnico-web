@@ -1,202 +1,318 @@
 <template>
-  <q-page class="about-page">
-    <section class="hero">
-      <div class="hero-overlay"></div>
-      <div class="hero-content text-center text-white">
-        <h1 class="text-h3 text-weight-bold">Soporte Técnico Profesional</h1>
-        <p class="q-mt-sm text-subtitle1">
-          Reparación, mantenimiento y optimización de equipos
-        </p>
-      </div>
-    </section>
-
-    <section class="q-pa-xl">
-      <div class="row items-center q-col-gutter-xl">
-        <div class="col-12 col-md-6">
-          <q-img
-            src="https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg"
-            class="about-img"
-          />
-        </div>
-
-        <div class="col-12 col-md-6">
-          <div class="badge">✔ Servicio Profesional</div>
-
-          <h2 class="section-title q-mt-sm q-mb-md">Sobre Nosotros</h2>
-
-          <p class="desc">
-            Nos especializamos en reparación, mantenimiento y optimización de computadoras y laptops.
-            Brindamos soluciones rápidas, seguras y confiables.
+  <q-page class="page-shell">
+    <div class="page-width page-grid">
+      <section class="hero-grid">
+        <div class="hero-card hero-card--light">
+          <span class="eyebrow eyebrow--light">
+            <q-icon name="handshake" size="18px" />
+            Sobre el servicio
+          </span>
+          <h1 class="section-title section-title--large">
+            Soporte tecnico con atencion clara, cercana y confiable.
+          </h1>
+          <p class="muted-copy lead-copy">
+            Trabajamos para que tu computadora o laptop vuelva a funcionar bien sin explicaciones
+            confusas ni procesos complicados.
           </p>
 
-          <div class="stats">
-            <div class="stat-card">
-              <div class="number">+500</div>
-              <div class="label">Equipos</div>
-            </div>
-
-            <div class="stat-card">
-              <div class="number">+3</div>
-              <div class="label">Años</div>
-            </div>
-
-            <div class="stat-card">
-              <div class="number">100%</div>
-              <div class="label">Clientes felices</div>
-            </div>
-          </div>
-
-          <div class="q-mt-lg">
-            <q-btn
-              color="green"
-              label="Contactar por WhatsApp"
-              icon="chat"
-              size="lg"
-              class="cta-btn"
-              @click="irWhatsApp"
-            />
+          <div class="about-metric-grid section-spacing">
+            <article
+              v-for="item in homeMetrics.slice(0, 4)"
+              :key="item.label"
+              class="about-metric-card"
+            >
+              <div class="about-metric-value">{{ item.value }}</div>
+              <div class="about-metric-label">{{ item.label }}</div>
+            </article>
           </div>
         </div>
-      </div>
 
-      <div class="features">
-        <h3 class="text-center text-weight-bold q-mb-xl">¿Por qué elegirnos?</h3>
-
-        <div class="row q-col-gutter-lg">
-          <div class="col-12 col-md-4">
-            <div class="feature-card">
-              ⚡ Atención rápida
-              <p>Respuesta inmediata a tus problemas</p>
-            </div>
-          </div>
-
-          <div class="col-12 col-md-4">
-            <div class="feature-card">
-              🔒 Seguridad total
-              <p>Protegemos tu información</p>
-            </div>
-          </div>
-
-          <div class="col-12 col-md-4">
-            <div class="feature-card">
-              💻 Experiencia técnica
-              <p>Profesionales capacitados</p>
+        <div class="story-card">
+          <q-img
+            src="https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg?auto=compress&cs=tinysrgb&w=1200"
+            class="story-image"
+            fit="cover"
+          />
+          <div class="story-overlay">
+            <div class="story-copy">
+              <div class="story-tag">Atencion con enfoque humano</div>
+              <div class="story-title">
+                Priorizamos tu tiempo, tu informacion y el buen estado de tu equipo.
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+      <section class="triple-grid">
+        <article v-for="item in aboutValues" :key="item.title" class="content-card">
+          <div class="icon-circle" style="background: var(--ts-peach-soft)">
+            <q-icon :name="item.icon" size="24px" />
+          </div>
+          <h2 class="mini-title q-mt-md">{{ item.title }}</h2>
+          <p class="muted-copy q-mb-none">{{ item.body }}</p>
+        </article>
+      </section>
+
+      <section class="hero-grid">
+        <div class="surface-panel">
+          <span class="eyebrow eyebrow--light">
+            <q-icon name="route" size="18px" />
+            Como trabajamos
+          </span>
+          <h2 class="section-title">Un proceso simple para ayudarte mas rapido.</h2>
+
+          <div class="timeline-list">
+            <div v-for="(step, index) in processSteps" :key="step.title" class="timeline-item">
+              <div class="timeline-badge">{{ index + 1 }}</div>
+              <div>
+                <div class="mini-title">{{ step.title }}</div>
+                <p class="muted-copy q-mb-none">{{ step.body }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="stack-column">
+          <div class="floating-card promise-card">
+            <div class="mini-title">Promesa de atencion</div>
+            <p class="muted-copy">
+              Revisamos el problema, explicamos la solucion y coordinamos la atencion mas
+              conveniente para que tu equipo vuelva a funcionar bien.
+            </p>
+            <div class="chip-row">
+              <span class="tag-pill">Claridad</span>
+              <span class="tag-pill">Confianza</span>
+              <span class="tag-pill">Seguimiento</span>
+            </div>
+          </div>
+
+          <div class="floating-card">
+            <div class="mini-title">Lo que puedes esperar</div>
+            <ul class="service-list muted-copy">
+              <li>Diagnostico claro y trato directo.</li>
+              <li>Recomendaciones utiles para tu equipo.</li>
+              <li>Atencion por WhatsApp o llamada.</li>
+              <li>Soporte remoto y coordinado en Sullana.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="cta-card">
+        <div>
+          <span class="eyebrow">Listos para ayudarte</span>
+          <h2 class="section-title cta-heading">
+            Si tu computadora o laptop falla, coordinemos la atencion hoy mismo.
+          </h2>
+        </div>
+
+        <div class="action-row">
+          <q-btn
+            unelevated
+            no-caps
+            label="Ver servicios"
+            to="/servicios"
+            class="ts-btn ts-btn--warm"
+          />
+          <q-btn
+            unelevated
+            no-caps
+            label="Ir a contacto"
+            to="/contacto"
+            class="ts-btn ts-btn--soft"
+          />
+        </div>
+      </section>
+    </div>
   </q-page>
 </template>
 
 <script>
+import { aboutValues, homeMetrics, processSteps } from 'src/data/site'
+
 export default {
-  methods: {
-    irWhatsApp () {
-      const mensaje = 'Hola, quiero información sobre sus servicios'
-      const numero = '51915174884'
-      const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`
-      window.open(url, '_blank')
+  name: 'NosotrosPage',
+
+  data() {
+    return {
+      aboutValues,
+      homeMetrics,
+      processSteps,
     }
-  }
+  },
 }
 </script>
 
 <style scoped>
-.about-page {
-  background: #f8fafc;
+.hero-grid {
+  align-items: start;
 }
 
-.hero {
-  height: 40vh;
+.section-title--large {
+  max-width: 11ch;
+  font-size: clamp(2rem, 3vw, 3.3rem);
+  line-height: 1;
+}
+
+.lead-copy {
+  max-width: 44ch;
+}
+
+.about-metric-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.about-metric-card {
+  display: grid;
+  align-content: start;
+  min-height: 0;
+  padding: 20px;
+  border-radius: 22px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(244, 249, 253, 0.82));
+  border: 1px solid rgba(22, 32, 51, 0.06);
+  box-shadow: var(--ts-shadow-soft);
+}
+
+.about-metric-value {
+  margin-bottom: 10px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.55rem;
+  font-weight: 700;
+  line-height: 1.05;
+}
+
+.about-metric-label {
+  max-width: 18ch;
+  color: var(--ts-muted);
+  font-size: 0.98rem;
+  line-height: 1.5;
+}
+
+.story-card {
   position: relative;
-  background: linear-gradient(135deg, #0f172a, #1e293b);
+  overflow: hidden;
+  min-height: clamp(340px, 44vw, 460px);
+  border-radius: 34px;
+  border: 1px solid var(--ts-border);
+  box-shadow: var(--ts-shadow);
+}
+
+.story-image {
+  width: 100%;
+  height: 100%;
+  min-height: clamp(340px, 44vw, 460px);
+}
+
+.story-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  background: linear-gradient(180deg, rgba(10, 18, 31, 0.08), rgba(10, 18, 31, 0.7));
+}
+
+.story-copy {
+  padding: 22px;
+  color: #fff;
+}
+
+.story-tag {
+  margin-bottom: 8px;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.78;
+}
+
+.story-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(1.3rem, 2vw, 1.7rem);
+  line-height: 1.18;
+}
+
+.timeline-list {
+  display: grid;
+  gap: 18px;
+  margin-top: 22px;
+}
+
+.timeline-item {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+  padding: 18px;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.68);
+  border: 1px solid rgba(22, 32, 51, 0.06);
+}
+
+.timeline-badge {
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 18px;
+  background: var(--ts-primary);
+  color: #fff;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
 }
 
-.hero-overlay {
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(circle at 20% 30%, rgba(0,255,255,0.15), transparent),
-    radial-gradient(circle at 80% 70%, rgba(0,255,200,0.15), transparent);
+.promise-card {
+  background: linear-gradient(135deg, rgba(255, 243, 236, 0.95), rgba(255, 250, 245, 0.95));
 }
 
-.hero-content {
-  position: relative;
-  z-index: 2;
-}
-
-.about-img {
-  border-radius: 20px;
-  height: 350px;
-  object-fit: cover;
-  box-shadow: 0 25px 60px rgba(0,0,0,0.25);
-}
-
-.badge {
-  background: #22c55e;
-  color: white;
-  padding: 6px 12px;
-  border-radius: 20px;
-  display: inline-block;
-  margin-bottom: 10px;
-}
-
-.section-title {
-  font-size: 28px;
-  font-weight: bold;
-}
-
-.desc {
-  color: #475569;
-  margin-bottom: 20px;
-}
-
-.stats {
+.cta-card {
   display: flex;
-  gap: 15px;
-  margin-top: 20px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: clamp(24px, 3vw, 32px);
+  border-radius: 32px;
+  background: rgba(255, 250, 244, 0.84);
+  border: 1px solid var(--ts-border);
+  box-shadow: var(--ts-shadow-soft);
 }
 
-.stat-card {
-  flex: 1;
-  background: white;
-  padding: 15px;
-  border-radius: 16px;
-  text-align: center;
-  box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+.cta-heading {
+  margin-bottom: 0;
 }
 
-.number {
-  font-size: 22px;
-  font-weight: bold;
-  color: #2563eb;
+@media (max-width: 1024px) {
+  .cta-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
 
-.features {
-  margin-top: 60px;
+@media (max-width: 768px) {
+  .section-title--large {
+    max-width: none;
+  }
+
+  .about-metric-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .timeline-item {
+    grid-template-columns: 48px minmax(0, 1fr);
+    gap: 14px;
+  }
 }
 
-.feature-card {
-  background: white;
-  padding: 20px;
-  border-radius: 16px;
-  text-align: center;
-  transition: 0.3s;
-  box-shadow: 0 15px 40px rgba(0,0,0,0.1);
-}
+@media (max-width: 540px) {
+  .timeline-item {
+    grid-template-columns: 1fr;
+  }
 
-.feature-card:hover {
-  transform: translateY(-10px);
-  background: #e0f2fe;
-}
-
-.cta-btn {
-  border-radius: 12px;
-  padding: 12px 30px;
-  font-weight: bold;
+  .timeline-badge {
+    width: 46px;
+    height: 46px;
+  }
 }
 </style>
